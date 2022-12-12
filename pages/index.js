@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import { StyledFavorites } from "../src/components/Favorites.js";
 
 function HomePage() {
   return (
@@ -12,6 +13,7 @@ function HomePage() {
         <Menu />
         <Header />
         <TimeLine playlists={config.playlists} />
+        <Fav ListFavorites={config["meus-favoritos"]}/>
       </div>
     </>
   );
@@ -84,5 +86,35 @@ function TimeLine(propriedades) {
         );
       })}
     </StyledTimeline>
+  );
+}
+
+function Fav(propriedades) {
+  // console.log("Dentro do componente", propriedades.ListFavorites);
+  const KeysFavorites = Object.keys(propriedades.ListFavorites);
+  // console.log("Chaves", KeysFavorites);
+  return (
+    <StyledFavorites>
+      {KeysFavorites.map((KeyFavorite) => {
+        const usernames = propriedades.ListFavorites[KeyFavorite];
+        // console.log(username);
+        // console.log(KeyFavorite);
+        return (
+          <section>
+            <h2>{KeyFavorite}</h2>
+            <div>
+              {usernames.map((username) => {
+                return (
+                  <a href={username.linkyoutube}>
+                    <img src={username.photo} />
+                    <span>{username.username}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </StyledFavorites>
   );
 }

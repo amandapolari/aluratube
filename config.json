@@ -130,17 +130,25 @@
             "url": "https://www.youtube.com/watch?v=0JWMVc1CqpA",
             "thumb": "https://img.youtube.com/vi/0JWMVc1CqpA/hqdefault.jpg"
           }
-        ],
-        "favoritos": [
+        ]
+      },
+      "meus-favoritos": {
+        "favoritos":
+        [
           {
-            "title": "@luanleonardo",
-            "url": "https://www.youtube.com/@luanleonardo3242",
-            "thumb": "https://avatars.githubusercontent.com/u/33757982?v=4"
+            "username": "@luanleonardo",
+            "linkyoutube": "https://www.youtube.com/@luanleonardo3242",
+            "photo": "https://avatars.githubusercontent.com/u/33757982?v=4"
           },
           {
-            "title": "@rafaballerini",
-            "url": "https://www.youtube.com/results?search_query=rafaella+ballerini",
-            "thumb": "https://avatars.githubusercontent.com/u/54322854?v=4"
+            "username": "@rafaballerini",
+            "linkyoutube": "https://www.youtube.com/results?search_query=rafaella+ballerini",
+            "photo": "https://avatars.githubusercontent.com/u/54322854?v=4"
+          },
+          {
+            "username": "@gustavoguanabara",
+            "linkyoutube": "https://www.youtube.com/@CursoemVideo",
+            "photo": "https://avatars.githubusercontent.com/u/8683378?v=4"
           }
         ]
       }
