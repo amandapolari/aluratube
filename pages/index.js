@@ -5,36 +5,27 @@ import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 function HomePage() {
-//   const estiloDaHomePage = { backgroundColor: "red" };
-
-  // console.log(config.playlists);
-
   return (
     <>
-        <CSSReset/>
-        <div>
+      <CSSReset />
+      <div>
         <Menu />
         <Header />
         <TimeLine playlists={config.playlists} />
-        </div>
+      </div>
     </>
   );
 }
 
 export default HomePage;
 
-// function Menu() {
-//   return <div>Menu</div>;
-// }
-
 const StyledHeader = styled.div`
-  img {
+  .photo-user {
     width: 80px;
     height: 80px;
     border-radius: 50%;
   }
   .user-info {
-    margin-top: 50px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -42,13 +33,21 @@ const StyledHeader = styled.div`
     gap: 16px;
   }
 `;
+const StyledBanner = styled.div`
+  background-image: url(${({ bg }) => bg});
+  width: 100%;
+  height: 230px;
+`;
 
 function Header() {
   return (
     <StyledHeader>
-      {/* <img src="banner" /> */}
+      <StyledBanner bg={config.bg} />
       <section className="user-info">
-        <img src={`https://github.com/${config.github}.png`} />
+        <img
+          className="photo-user"
+          src={`https://github.com/${config.github}.png`}
+        />
         <div>
           <h2>{config.name}</h2>
           <p>{config.job}</p>

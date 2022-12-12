@@ -2,6 +2,7 @@
     "name": "Amanda Polari",
     "job": "Front-End Sofware Enginner",
     "github": "amandapolari",
+    "bg": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     "playlists": {
         "jogos": [
             {
@@ -128,6 +129,18 @@
             "title": "O que é o C#? #HipstersPontoTube",
             "url": "https://www.youtube.com/watch?v=0JWMVc1CqpA",
             "thumb": "https://img.youtube.com/vi/0JWMVc1CqpA/hqdefault.jpg"
+          }
+        ],
+        "favoritos": [
+          {
+            "title": "@luanleonardo",
+            "url": "https://www.youtube.com/@luanleonardo3242",
+            "thumb": "https://avatars.githubusercontent.com/u/33757982?v=4"
+          },
+          {
+            "title": "@rafaballerini",
+            "url": "https://www.youtube.com/results?search_query=rafaella+ballerini",
+            "thumb": "https://avatars.githubusercontent.com/u/54322854?v=4"
           }
         ]
       }
