@@ -1,18 +1,17 @@
 import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
-import { CSSReset } from "../src/components/CSSReset";
+// import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledFavorites } from "../src/components/Favorites.js";
 
 function HomePage() {
   const [valorDoFiltro, setValorDoFiltro] = React.useState("");
-  // const valorDoFiltro = "Angular";
 
   return (
     <>
-      <CSSReset />
+      {/* <CSSReset /> */}
       <div>
         <Menu
           valorDoFiltro={valorDoFiltro}
@@ -29,6 +28,8 @@ function HomePage() {
 export default HomePage;
 
 const StyledHeader = styled.div`
+background-color: ${({ theme }) => theme.backgroundLevel1};
+
   .photo-user {
     width: 80px;
     height: 80px;
@@ -43,6 +44,7 @@ const StyledHeader = styled.div`
   }
 `;
 const StyledBanner = styled.div`
+    background-color: blue;
   background-image: url(${({ bg }) => bg});
   /* background-image: url(${config.bg}); */
   width: 100%;
@@ -68,15 +70,12 @@ function Header() {
 }
 
 function TimeLine({ searchValue, ...propriedades }) {
-  // console.log("Dentro do componente", propriedades.playlists);
   const playlistNames = Object.keys(propriedades.playlists);
 
   return (
     <StyledTimeline>
       {playlistNames.map((playlistName) => {
         const videos = propriedades.playlists[playlistName];
-        // console.log(playlistName);
-        // console.log(videos);
         return (
           <section key={playlistName}>
             <h2>{playlistName}</h2>
@@ -104,15 +103,11 @@ function TimeLine({ searchValue, ...propriedades }) {
 }
 
 function Fav(propriedades) {
-  // console.log("Dentro do componente", propriedades.ListFavorites);
   const KeysFavorites = Object.keys(propriedades.ListFavorites);
-  // console.log("Chaves", KeysFavorites);
   return (
     <StyledFavorites>
       {KeysFavorites.map((KeyFavorite) => {
         const usernames = propriedades.ListFavorites[KeyFavorite];
-        // console.log(username);
-        // console.log(KeyFavorite);
         return (
           <section key={KeyFavorite}>
             <h2>{KeyFavorite}</h2>
