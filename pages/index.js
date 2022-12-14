@@ -1,3 +1,4 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
@@ -6,14 +7,20 @@ import { StyledTimeline } from "../src/components/Timeline";
 import { StyledFavorites } from "../src/components/Favorites.js";
 
 function HomePage() {
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+  // const valorDoFiltro = "Angular";
+
   return (
     <>
       <CSSReset />
       <div>
-        <Menu />
+        <Menu
+          valorDoFiltro={valorDoFiltro}
+          setValorDoFiltro={setValorDoFiltro}
+        />
         <Header />
-        <TimeLine playlists={config.playlists} />
-        <Fav ListFavorites={config["meus-favoritos"]}/>
+        <TimeLine searchValue={valorDoFiltro} playlists={config.playlists} />
+        <Fav ListFavorites={config["meus-favoritos"]} />
       </div>
     </>
   );
@@ -37,6 +44,7 @@ const StyledHeader = styled.div`
 `;
 const StyledBanner = styled.div`
   background-image: url(${({ bg }) => bg});
+  /* background-image: url(${config.bg}); */
   width: 100%;
   height: 230px;
 `;
@@ -59,7 +67,7 @@ function Header() {
   );
 }
 
-function TimeLine(propriedades) {
+function TimeLine({ searchValue, ...propriedades }) {
   // console.log("Dentro do componente", propriedades.playlists);
   const playlistNames = Object.keys(propriedades.playlists);
 
@@ -67,20 +75,26 @@ function TimeLine(propriedades) {
     <StyledTimeline>
       {playlistNames.map((playlistName) => {
         const videos = propriedades.playlists[playlistName];
-        console.log(playlistName);
-        console.log(videos);
+        // console.log(playlistName);
+        // console.log(videos);
         return (
-          <section>
+          <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map((video) => {
-                return (
-                  <a href={video.url}>
-                    <img src={video.thumb} />
-                    <span>{video.title}</span>
-                  </a>
-                );
-              })}
+              {videos
+                .filter((video) => {
+                  const titleNormalize = video.title.toLowerCase();
+                  const searchValueNormalize = searchValue.toLowerCase();
+                  return titleNormalize.includes(searchValueNormalize);
+                })
+                .map((video) => {
+                  return (
+                    <a key={video.url} href={video.url}>
+                      <img src={video.thumb} />
+                      <span>{video.title}</span>
+                    </a>
+                  );
+                })}
             </div>
           </section>
         );
@@ -100,12 +114,12 @@ function Fav(propriedades) {
         // console.log(username);
         // console.log(KeyFavorite);
         return (
-          <section>
+          <section key={KeyFavorite}>
             <h2>{KeyFavorite}</h2>
             <div>
               {usernames.map((username) => {
                 return (
-                  <a href={username.linkyoutube}>
+                  <a key={username.linkyoutube} href={username.linkyoutube}>
                     <img src={username.photo} />
                     <span>{username.username}</span>
                   </a>
