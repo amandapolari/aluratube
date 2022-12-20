@@ -1,4 +1,6 @@
+import React from "react";
 import { ThemeProvider } from "styled-components"
+import ColorModeProvider, { ColorModeContext } from "../src/components/ColorMode";
 import { CSSReset } from "../src/components/CSSReset";
 
 const theme = {
@@ -20,11 +22,32 @@ const theme = {
 
 // _app.js -> Definições globais do NextJS
 // ThemeProvider -> Prover o tema para a app toda
-export default function MyApp({ Component, pageProps }) {
+// ColorModeProvider -> Prove o state de light ou dark mode para todo mundo
+
+function ProviderWrapper(props) {
   return (
-    <ThemeProvider theme={theme.dark}>
-      <CSSReset />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ColorModeProvider initialMode={"light"}>
+    {props.children}
+    </ColorModeProvider>
+  )
+}
+
+function MyApp({ Component, pageProps }) {
+  const contexto = React.useContext(ColorModeContext);
+  console.log(contexto.mode);
+
+  return (
+      <ThemeProvider theme={theme[contexto.mode]}>
+        <CSSReset />
+        <Component {...pageProps} />
+      </ThemeProvider>
   );
+}
+
+export default function _App(props) {
+  return (
+    <ProviderWrapper>
+      <MyApp {...props}/>
+    </ProviderWrapper>
+  )
 }
