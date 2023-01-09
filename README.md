@@ -15,3 +15,8 @@
 <p align="center"><strong>Status do Projeto:<br></strong> <i>Em Construção </i>🏗️</p>
 
 ---
+
+## Estrutura do projeto: 
+- `_app.js` : carrega o setup base do projeto
+  - Aqui vão ficar os Providers base de informação do nosso projeto 
+  - CSSResete
