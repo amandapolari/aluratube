@@ -1,9 +1,33 @@
 import React from "react";
 import { StyledRegisterVideo } from "./styles";
 
+// Custom Hook
+function useForm(propsDoForm) {
+  const [values, setValues] = React.useState(propsDoForm.initialValues);
+
+  return {
+    values,
+    handleChange: (evento) => {
+      console.log(evento.target);
+      const value = evento.target.value;
+      const name = evento.target.name;
+      console.log(evento.target.name);
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    },
+    clearForm() {
+      setValues({});
+    },
+  };
+}
+
 export default function RegisterVideo() {
+  const formCadastro = useForm({
+    initialValues: { titulo: "Frost punk", url: "https://youtube.." },
+  });
   const [formVisivel, setFormVisivel] = React.useState(false);
-  const [values, setvalues] = React.useState({titulo: "", url: "" });
 
   /*
     O que precisamos para o form funcionar?
@@ -22,12 +46,17 @@ export default function RegisterVideo() {
       {/* No JavaScript se usa muito: */}
       {/* Ternário e Operadores de Curto-circuito */}
       {formVisivel ? (
-        <form onSubmit={(evento) => {
+        <form
+          onSubmit={(evento) => {
             evento.preventDefault();
-            console.log(values);
-        }}>
+            console.log(formCadastro.values);
+            setFormVisivel(false);
+            formCadastro.clearForm();
+          }}
+        >
           <div>
             <button
+              type="button"
               className="close-modal"
               onClick={() => setFormVisivel(false)}
             >
@@ -35,27 +64,15 @@ export default function RegisterVideo() {
             </button>
             <input
               placeholder="Título do Vídeo"
-              value={values.titulo}
-              onChange={(evento) => {
-                const value = evento.target.value;
-                console.log(value);
-                setvalues({
-                  ...values,
-                  titulo: value,
-                });
-              }}
+              name="titulo"
+              value={formCadastro.values.titulo}
+              onChange={formCadastro.handleChange}
             />
             <input
               placeholder="URL"
-              value={values.url}
-              onChange={(evento) => {
-                const value = evento.target.value;
-                console.log(value);
-                setvalues({
-                  ...values,
-                  url: value,
-                });
-              }}
+              name="url"
+              value={formCadastro.values.url}
+              onChange={formCadastro.handleChange}
             />
             <button type="submit">Cadastrar</button>
           </div>
