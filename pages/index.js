@@ -1,13 +1,29 @@
 import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
-// import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledFavorites } from "../src/components/Favorites.js";
+import { videoService } from "../src/services/videoService";
 
 function HomePage() {
   const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+
+  const service = videoService();
+  const [playlists, setPlaylist] = React.useState({});
+
+  React.useEffect(() => {
+    service.getAllVideos().then((resposta) => {
+      const novasPlaylists = { ...playlists };
+      resposta.data.forEach((video) => {
+        if (!novasPlaylists[video.playlist]) {
+          novasPlaylists[video.playlist] = [];
+        }
+        novasPlaylists[video.playlist].push(video);
+      });
+      setPlaylist(novasPlaylists);
+    });
+  }, []);
 
   return (
     <>
@@ -18,6 +34,7 @@ function HomePage() {
           setValorDoFiltro={setValorDoFiltro}
         />
         <Header />
+        <TimeLine searchValue={valorDoFiltro} playlists={playlists}/>
         <TimeLine searchValue={valorDoFiltro} playlists={config.playlists} />
         <Fav ListFavorites={config["meus-favoritos"]} />
       </div>
@@ -28,7 +45,7 @@ function HomePage() {
 export default HomePage;
 
 const StyledHeader = styled.div`
-background-color: ${({ theme }) => theme.backgroundLevel1};
+  background-color: ${({ theme }) => theme.backgroundLevel1};
 
   .photo-user {
     width: 80px;
@@ -44,7 +61,7 @@ background-color: ${({ theme }) => theme.backgroundLevel1};
   }
 `;
 const StyledBanner = styled.div`
-    background-color: blue;
+  background-color: blue;
   background-image: url(${({ bg }) => bg});
   /* background-image: url(${config.bg}); */
   width: 100%;

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyledRegisterVideo } from "./styles";
+import { createClient } from "@supabase/supabase-js";
 
 // Custom Hook
 function useForm(propsDoForm) {
@@ -11,7 +12,6 @@ function useForm(propsDoForm) {
       console.log(evento.target);
       const value = evento.target.value;
       const name = evento.target.name;
-      console.log(evento.target.name);
       setValues({
         ...values,
         [name]: value,
@@ -23,11 +23,30 @@ function useForm(propsDoForm) {
   };
 }
 
+const PROJECT_URL = "https://wplsdwolmqhqplteeopv.supabase.co";
+const PUBLIC_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwbHNkd29sbXFocXBsdGVlb3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzM0NDc1NzEsImV4cCI6MTk4OTAyMzU3MX0.pOuXqDwqigKzI7iSmVjwkBD0bU2G-FcdtQekOMgyMaw";
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+// get youtube thumbnail from video url
+function getThumbnail(url) {
+  return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+}
+
+// Testando:
+
+
 export default function RegisterVideo() {
-  const formCadastro = useForm({
-    initialValues: { titulo: "Frost punk", url: "https://youtube.." },
-  });
   const [formVisivel, setFormVisivel] = React.useState(false);
+  const formCadastro = useForm({
+    initialValues: {
+      titulo: "Frost punk",
+      url: "https://www.youtube.com/watch?v=QsqatJxAUtk",
+    },
+  });
+
+
+  // console.log(supabase);
 
   /*
     O que precisamos para o form funcionar?
@@ -43,13 +62,28 @@ export default function RegisterVideo() {
       <button className="add-video" onClick={() => setFormVisivel(true)}>
         +
       </button>
-      {/* No JavaScript se usa muito: */}
-      {/* Ternário e Operadores de Curto-circuito */}
+      {/* Ternário */}
+      {/* Operadores de Curto-circuito */}
       {formVisivel ? (
         <form
           onSubmit={(evento) => {
             evento.preventDefault();
-            console.log(formCadastro.values);
+            // console.log(formCadastro.values);
+
+            // Contrato entre o nosso Front e o BackEnd
+
+            supabase
+              .from("video")
+              .insert({
+                title: formCadastro.values.titulo,
+                url: formCadastro.values.url,
+                thumb: getThumbnail(formCadastro.values.url),
+                playlist: "jogos",
+              })
+              .select()
+              .then((resposta) => console.log(resposta))
+              .catch((err) => console.log(err));
+
             setFormVisivel(false);
             formCadastro.clearForm();
           }}
@@ -63,7 +97,7 @@ export default function RegisterVideo() {
               X
             </button>
             <input
-              placeholder="Título do Vídeo"
+              placeholder="Titulo do vídeo"
               name="titulo"
               value={formCadastro.values.titulo}
               onChange={formCadastro.handleChange}
