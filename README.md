@@ -12,7 +12,7 @@
   </a>
 </p>
 
-<p align="center"><strong>Status do Projeto:<br></strong> <i>Concluído </i>🏗️</p>
+<p align="center"><strong>Status do Projeto:<br></strong> <i>Concluído </i></p>
 
 ---
 
